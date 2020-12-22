@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +24,9 @@ import com.example.inshort.R;
  */
 public class WebViewFragment extends Fragment {
 
-    String url;
+    private static final String TAG = "WebViewFragment";
     WebView mWebView;
+    String url;
     public static final String MyPREFERENCES = "NewsPrefs" ;
 
     public WebViewFragment() {
@@ -43,11 +46,14 @@ public class WebViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_web_view, container, false);
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        url = sharedPreferences.getString("url", "");
         mWebView = rootView.findViewById(R.id.web_view);
-        mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl(url);
+//        mWebView.setWebViewClient(new WebViewClient());
+//        mWebView.loadUrl(url);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 }

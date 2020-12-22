@@ -5,9 +5,13 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import com.example.inshort.fragments.NewsFragment;
+import com.example.inshort.fragments.WebViewFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     ViewPager mViewPager;
     PagerAdapter mPagerAdapter;
     @Override
