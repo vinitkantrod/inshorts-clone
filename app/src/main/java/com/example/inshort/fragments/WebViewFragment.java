@@ -1,5 +1,7 @@
 package com.example.inshort.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,15 +22,9 @@ import com.example.inshort.R;
  */
 public class WebViewFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "url";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    TextView mTextView;
-
+    String url;
     WebView mWebView;
+    public static final String MyPREFERENCES = "NewsPrefs" ;
 
     public WebViewFragment() {
         // Required empty public constructor
@@ -46,8 +42,6 @@ public class WebViewFragment extends Fragment {
     public static WebViewFragment newInstance(String param1, String param2) {
         WebViewFragment fragment = new WebViewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,10 +49,6 @@ public class WebViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -66,11 +56,11 @@ public class WebViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_web_view, container, false);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        url = sharedPreferences.getString("url", "");
         mWebView = rootView.findViewById(R.id.web_view);
-        mTextView = rootView.findViewById(R.id.txt_view);
-        mTextView.setText(mParam2);
         mWebView.setWebViewClient(new WebViewClient());
-        mWebView.loadUrl(mParam1);
+        mWebView.loadUrl(url);
         return rootView;
     }
 }

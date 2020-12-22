@@ -3,13 +3,22 @@ package com.example.inshort.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.inshort.NewsAdapter;
 import com.example.inshort.R;
+import com.example.inshort.dtos.NewsDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +35,9 @@ public class NewsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView mTextView;
+
+    RecyclerView rc;
+    NewsAdapter newsAdapter;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -64,8 +75,19 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_news, container, false);
-        mTextView = rootView.findViewById(R.id.txt_view);
-        mTextView.setText(mParam2);
+        List<NewsDto> data = new ArrayList<>();
+        data.add(new NewsDto(1, "title", "body", "https://square.github.io/picasso/static/debug.png"));
+        data.add(new NewsDto(2, "title 2", "body 2", "https://square.github.io/picasso/static/debug.png"));
+        data.add(new NewsDto(3, "title 3", "body 3", "https://square.github.io/picasso/static/debug.png"));
+        newsAdapter = new NewsAdapter(getContext(), data);
+        rc = rootView.findViewById(R.id.news_recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        rc.setLayoutManager(linearLayoutManager);
+        snapHelper.attachToRecyclerView(rc);
+
+        rc.setAdapter(newsAdapter);
+
         return rootView;
     }
 }

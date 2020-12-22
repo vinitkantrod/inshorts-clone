@@ -28,7 +28,7 @@ public class CategoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView mTextView;
+
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -66,8 +66,7 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
-        mTextView = rootView.findViewById(R.id.txt_view);
-        mTextView.setText(mParam2);
+
         return rootView;
     }
 }
