@@ -27,23 +27,10 @@ public class WebViewFragment extends Fragment {
     public static final String MyPREFERENCES = "NewsPrefs" ;
 
     public WebViewFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WebViewFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WebViewFragment newInstance(String param1, String param2) {
-        WebViewFragment fragment = new WebViewFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public static WebViewFragment newInstance() {
+        return new WebViewFragment();
     }
 
     @Override

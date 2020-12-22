@@ -37,6 +37,8 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //Logging Network Calls
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     // Lombak
     implementation 'org.projectlombok:lombok:1.18.12'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

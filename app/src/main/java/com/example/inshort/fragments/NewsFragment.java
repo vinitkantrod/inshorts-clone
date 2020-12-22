@@ -8,17 +8,25 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.inshort.NewsAdapter;
+import com.example.inshort.NewsInterface;
+import com.example.inshort.NewsRetrofit;
 import com.example.inshort.R;
+import com.example.inshort.dtos.NewsApiRespDto;
 import com.example.inshort.dtos.NewsDto;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,47 +35,25 @@ import java.util.List;
  */
 public class NewsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private static final String TAG = "NewsFragment";
     RecyclerView rc;
     NewsAdapter newsAdapter;
+    NewsInterface newsInterface;
+    NewsRetrofit newsRetrofit;
+    NewsApiRespDto newsDtoList;
 
     public NewsFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static NewsFragment newInstance(String param1, String param2) {
+    public static NewsFragment newInstance() {
         NewsFragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -75,10 +61,11 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_news, container, false);
+        Log.i(TAG, "onCreateView: News Fragment");
+        newsRetrofit = new NewsRetrofit();
+        newsInterface = newsRetrofit.getNewsInterface();
+        newsInterface.getNewsList().enqueue(newsCallback);
         List<NewsDto> data = new ArrayList<>();
-        data.add(new NewsDto(1, "title", "body", "https://square.github.io/picasso/static/debug.png"));
-        data.add(new NewsDto(2, "title 2", "body 2", "https://square.github.io/picasso/static/debug.png"));
-        data.add(new NewsDto(3, "title 3", "body 3", "https://square.github.io/picasso/static/debug.png"));
         newsAdapter = new NewsAdapter(getContext(), data);
         rc = rootView.findViewById(R.id.news_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -90,4 +77,22 @@ public class NewsFragment extends Fragment {
 
         return rootView;
     }
+
+    Callback<NewsApiRespDto> newsCallback = new Callback<NewsApiRespDto>() {
+        @Override
+        public void onResponse(Call<NewsApiRespDto> call, Response<NewsApiRespDto> response) {
+            if (response.isSuccessful()) {
+                newsDtoList = response.body();
+                Log.i(TAG, "onResponse: " + newsDtoList.toString());
+                newsAdapter.setNewsList(newsDtoList.getArticles());
+            } else {
+                Log.i(TAG, "onResponse: 111111");
+            }
+        }
+
+        @Override
+        public void onFailure(Call<NewsApiRespDto> call, Throwable t) {
+            t.printStackTrace();
+        }
+    };
 }

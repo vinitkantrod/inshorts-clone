@@ -17,29 +17,21 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-    /**
-     * Return the Fragment associated with a specified position.
-     *
-     * @param position
-     */
     @NonNull
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0: // Fragment # 0 - This will show FirstFragment
-                return CategoryFragment.newInstance("0", "Page # 1");
+                return CategoryFragment.newInstance();
             case 1: // Fragment # 0 - This will show FirstFragment different title
-                return NewsFragment.newInstance("1", "Page # 2");
+                return NewsFragment.newInstance();
             case 2: // Fragment # 1 - This will show SecondFragment
-                return WebViewFragment.newInstance("2", "Page # 3");
+                return WebViewFragment.newInstance();
             default:
                 return null;
         }
     }
 
-    /**
-     * Return the number of views available.
-     */
     @Override
     public int getCount() {
         return NUM_PAGES;

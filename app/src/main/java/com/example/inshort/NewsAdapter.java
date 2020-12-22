@@ -49,9 +49,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         NewsDto n = newsDtoList.get(position);
         if (n != null) {
             new DownloadImageTask(holder.mImageView)
-                    .execute(n.getImage());
+                    .execute(n.getUrlToImage());
             holder.mTitleTxtView.setText(n.getTitle());
-            holder.mBodyTxtView.setText(n.getMsg());
+            holder.mBodyTxtView.setText(n.getDescription());
+            holder.mAuthorTxtView.setText(n.getAuthor());
+            holder.mDateTxtView.setText(n.getPublishedAt());
         }
         updateSharedPref(n.getUrl());
     }
@@ -69,12 +71,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         ImageView mImageView;
         TextView mTitleTxtView;
         TextView mBodyTxtView;
+        TextView mAuthorTxtView;
+        TextView mDateTxtView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.news_image_view);
             mTitleTxtView = itemView.findViewById(R.id.news_title);
             mBodyTxtView = itemView.findViewById(R.id.news_body);
+            mAuthorTxtView = itemView.findViewById(R.id.news_author);
+            mDateTxtView = itemView.findViewById(R.id.news_date);
         }
     }
 
@@ -108,5 +114,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString("url", url);
         editor.commit();
+    }
+
+    public void setNewsList(List<NewsDto> newsList) {
+        this.newsDtoList = newsList;
+        notifyDataSetChanged();
     }
 }

@@ -1,30 +1,64 @@
 package com.example.inshort.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
 public class NewsDto {
-    Integer id;
+    String author;
     String title;
-    String msg;
-    String image;
+    String description;
     String url;
+    String urlToImage;
+    String publishedAt;
 
     public NewsDto() {}
-    public NewsDto(Integer id, String title, String msg, String image) {
-        this.id = id;
-        this.title = title;
-        this.msg = msg;
-        this.image = image;
+
+    public String getAuthor() {
+        return author;
     }
 
-    public Integer getId() { return  this.id; }
-    public String getTitle() { return  this.title; }
-    public String getMsg() { return  this.msg; }
-    public String getImage() { return  this.image; }
-    public String getUrl() { return  this.url; }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-    public void setId(Integer id) { this.id = id; }
-    public void setTitle(String title) { this.title = title; }
-    public void setMsg(String msg) { this.msg = msg; }
-    public void setImage(String image) { this.image = image; }
-    public void setUrl(String url) { this.url = url; }
+    public String getTitle() {
+        return title;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrlToImage() {
+        return urlToImage;
+    }
+
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
+    }
+
+    public String getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 }
